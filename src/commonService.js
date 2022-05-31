@@ -88,6 +88,7 @@ const getAll = async () => {
         let resultQ6 = { totalResults: 0, message: [] }, resultQ7 = { totalResults: 0, message: [] };
         for(let emailChunk of emailChunks) {
             const responseQ4 = await doQueryExec(connectionELearning, Query04, emailChunk)
+            
             if (responseQ4) {
                 if (responseQ4.message) { resultQ4.message.push(responseQ4.message) }
                 resultQ4.totalResults = resultQ4.totalResults + responseQ4.length ? responseQ4.length : 0
@@ -123,50 +124,53 @@ const getAll = async () => {
         const resultsQ11 = await doQueryExec(connectionLearnDot, Query11);
         elapsed_time("request complete")
         return {
-            executionQ1: {
-                affectedRows: resultsQ1 ? resultsQ1.affectedRows : 0,
-                message: resultsQ1 ? resultsQ1.message : null
-            },
-            executionQ2: {
-                affectedRows: resultsQ2 ? resultsQ2.affectedRows : 0,
-                message: resultsQ2 ? resultsQ2.message : null
-            },
-            executionQ3: {
-                totalResults: resultsQ3.length,
-                executionChunk: emailChunks.length,
-            },
-            executionQ4: {
-                totalResults: resultQ4 ? resultQ4.totalResults : 0,
-                message: resultQ4 ? resultQ4.message : null
-            },
-            executionQ5: {
-                totalResults: resultQ5 ? resultQ5.totalResults : null,
-                message: resultQ5 ? resultQ5.message : null
-            },
-            executionQ6: {
-                totalResults: resultQ6 ? resultQ6.totalResults : null,
-                message: resultQ6 ? resultQ6.message : null
-            },
-            executionQ7: {
-                totalResults: resultQ7 ? resultQ7.totalResults : null,
-                message: resultQ7 ? resultQ7.message : null
-            },
-            executionQ8: {
-                totalResults: resultsQ8 ? resultsQ8.totalResults : null,
-                message: resultsQ8 ? resultsQ8.message : null
-            },
-            executionQ9: {
-                totalResults: resultsQ9 ? resultsQ9.totalResults : null,
-                message: resultsQ9 ? resultsQ9.message : null
-            },
-            executionQ10: {
-                totalResults: resultsQ10 ? resultsQ10.totalResults : null,
-                message: resultsQ10 ? resultsQ10.message : null
-            },
-            executionQ11: {
-                totalResults: resultsQ11 ? resultsQ11.totalResults : null,
-                message: resultsQ11 ? resultsQ11.message : null
-            }  
+            data: resultsQ11,
+            execution: {
+                executionQ1: {
+                    affectedRows: resultsQ1 ? resultsQ1.affectedRows : 0,
+                    message: resultsQ1 ? resultsQ1.message : null
+                },
+                executionQ2: {
+                    affectedRows: resultsQ2 ? resultsQ2.affectedRows : 0,
+                    message: resultsQ2 ? resultsQ2.message : null
+                },
+                executionQ3: {
+                    totalResults: resultsQ3.length,
+                    executionChunk: emailChunks.length,
+                },
+                executionQ4: {
+                    totalResults: resultQ4 ? resultQ4.totalResults : 0,
+                    message: resultQ4 ? resultQ4.message : null
+                },
+                executionQ5: {
+                    totalResults: resultQ5 ? resultQ5.totalResults : null,
+                    message: resultQ5 ? resultQ5.message : null
+                },
+                executionQ6: {
+                    totalResults: resultQ6 ? resultQ6.totalResults : null,
+                    message: resultQ6 ? resultQ6.message : null
+                },
+                executionQ7: {
+                    totalResults: resultQ7 ? resultQ7.totalResults : null,
+                    message: resultQ7 ? resultQ7.message : null
+                },
+                executionQ8: {
+                    totalResults: resultsQ8 ? resultsQ8.totalResults : null,
+                    message: resultsQ8 ? resultsQ8.message : null
+                },
+                executionQ9: {
+                    totalResults: resultsQ9 ? resultsQ9.totalResults : null,
+                    message: resultsQ9 ? resultsQ9.message : null
+                },
+                executionQ10: {
+                    totalResults: resultsQ10 ? resultsQ10.totalResults : null,
+                    message: resultsQ10 ? resultsQ10.message : null
+                },
+                executionQ11: {
+                    totalResults: resultsQ11 ? resultsQ11.totalResults : null,
+                    message: resultsQ11 ? resultsQ11.message : null
+                }  
+            }
         }
     } catch (err) {
         logger.error('An error occured while getAll processing', err);

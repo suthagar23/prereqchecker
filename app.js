@@ -1,42 +1,30 @@
 const express = require('express');
-const mysql = require('mysql');
-const ejs = require('ejs');
-const methodOverride = require('method-override');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const { createLearnDotConnectionPool, createELearningConnectionPool } = require('./dbConnector');
-
+const { createLearnDotConnectionPool, createELearningConnectionPool } = require('./src/dbConnector');
+const indexRouter = require('./src/api/index/index.router')
 require('dotenv').config();
-
-const http = require('http')
-
-const port = process.env.PORT;  
-
-// Requiring Routes
-// const indexRouter = require('./api/index/index.router_async_test')
-const indexRouter = require('./api/index/index.router')
+const path = require('path');
 
 const app = express();
-
 app.use(morgan('short'));
-
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }))
 
-app.use(express.static('public'));
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
-app.use(methodOverride("_method"));
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+// Handles any requests that don't match the ones above
 
 // Using Routes ==========================================
-app.use('/', indexRouter)
+app.use('/api', indexRouter)
+
+app.get('*', (req,res) =>{
+	res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
 // listen for requests
 app.listen(process.env.PORT, () => {
-  console.log(`The server is running on port ${port}...`);
+  console.log(`The server is running on port ${process.env.PORT}...`);
   createLearnDotConnectionPool();
   createELearningConnectionPool();
 });

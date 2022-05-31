@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "run-app": "cd ./client && yarn build && cd ../ && node app.js"
   },
   "author": "Todd Brannon",
   "license": "ISC",

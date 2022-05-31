@@ -4,3 +4,5 @@ archive/
 dist/
 readme_internal.md
 **/.DS_Store
+client/build
+prereqchecker_model.sql
