@@ -33,21 +33,21 @@ class Prereqcheck extends Component {
         <Header />
         <div class="container container-header">
           <div class="jumbotron">
-            { !isLoading ? (
-              <div class="container py-3 refresh-button-view">
-                  <button onClick={() => this.doPreRequestCheck()} type="button" class="btn btn-primary btn-lg" id="load2" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Fetching results...this may take a couple of minutes">
-                    Get My Results
-                  </button>
-              </div>
-            ) : (
-              <div>
-                <h6 style={{ paddingTop: '50px'}}>Fetching results...this may take a couple of minutes</h6>
-                <div class="spinner-border" role="status">
-                  <span class="sr-only">Loading...</span>
+            <div class="container py-3 refresh-button-view">
+              <button onClick={() => this.doPreRequestCheck()} disabled={isLoading} type="button" class="btn btn-primary btn-lg" id="load2" style={{ width: "600px"}}>
+                { !isLoading ? (
+                  <p style={{ paddingTop: "13px"}}> Get My Results </p>
+              ) : (
+                <div>
+                  <div style={{marginTop: "13px"}} class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <p style={{ float: "right", paddingLeft: "15px", paddingTop: "13px" }}>Fetching results...this may take a couple of minutes</p>
                 </div>
-              </div>
-            )}
-          
+              )}
+              </button>
+            </div>
+
           {data && data.length > 0 && (
               <div class = "container results-table-view" >
                 <table class="table table-striped table-bordered table-expandable mydatatable" style={{width: '100%' }}>
