@@ -9,7 +9,7 @@ import Highlighter from "react-highlight-words";
 const Prereqcheck = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const countPerPage = 6;
+  const [countPerPage, setCountPerPage] = useState(5);
   const [value, setValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [collection, setCollection] = useState([]);
@@ -46,7 +46,7 @@ const Prereqcheck = () => {
     } else {
       searchData(value);
     }
-  }, [value, data]);
+  }, [value, data, countPerPage]);
 
   const updatePage = p => {
     setCurrentPage(p);
@@ -54,6 +54,13 @@ const Prereqcheck = () => {
     const from = to - countPerPage;
     setCollection(cloneDeep(data.slice(from, to)));
   };
+
+  const getClassName = (value) => {
+    if (value && value.toLowerCase() === "no") {
+      return "table-row-no";
+    }
+    return "";
+  }
 
   return (
     <div className="App">
@@ -113,23 +120,37 @@ const Prereqcheck = () => {
                             <td>{item.email}</td>
                             <td>{(<Highlighter highlightClassName="table-search-highlight" searchWords={[value]} textToHighlight={item.full_name} />)}</td>
                             <td>{item.status}</td>
-                            <td>{item.F3 || ''}</td>
-                            <td>{item.ASnR}</td>
-                            <td>{item.CD}</td>
-                            <td>{item.CCLabs}</td>
-                            <td>{item.ArchCert}</td>
+                            <td className={getClassName(item.F3)}>{item.F3 || ''}</td>
+                            <td className={getClassName(item.ASnR)}>{item.ASnR}</td>
+                            <td className={getClassName(item.CD)}>{item.CD}</td>
+                            <td className={getClassName(item.CCLabs)}>{item.CCLabs}</td>
+                            <td className={getClassName(item.ArchCert)}>{item.ArchCert}</td>
                         </tr>
                       )
                     }
                   )}
                   </tbody>
               </table>    
-              <Pagination
-                pageSize={countPerPage}
-                onChange={updatePage}
-                current={currentPage}
-                total={data.length}
-              />
+              
+              <div className='py-1' style={{ float: "right" }}>
+                <p style={{ display: "inline", paddingRight: "10px" }}>Rows per page</p>
+                <select name="countsPerPage" value={countPerPage} onChange={e => setCountPerPage(e.target.value)}>
+                    <option id="5" value={5} >5</option>
+                    <option id="10" value={10} >10</option>
+                    <option id="25" value={25} >25</option>
+                    <option id="50" value={50} >50</option>
+                    <option id={data.length} value={data.length} >All</option>
+                </select>
+              </div>
+              
+              <div className='table-pagination'>
+                <Pagination
+                  pageSize={countPerPage}
+                  onChange={updatePage}
+                  current={currentPage}
+                  total={data.length}
+                />
+              </div>
             </div>  
         ) : (
           <h4 style={{padding: '10px'}}> No results</h4>

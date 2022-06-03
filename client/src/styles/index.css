@@ -91,3 +91,13 @@ body {
 .table-search-highlight {
   background-color:gold;
 }
+
+.table-row-no {
+  background-color: #db073d !important;
+  color: #fff;
+}
+
+.table-pagination {
+  width: 100%;
+  display: inline-block;
+}
