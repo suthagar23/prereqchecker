@@ -101,3 +101,8 @@ body {
   width: 100%;
   display: inline-block;
 }
+
+.table-total-records {
+  float: left;
+  color: slategrey;
+}

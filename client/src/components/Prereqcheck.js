@@ -103,7 +103,7 @@ const Prereqcheck = () => {
         )}
         {viewData && viewData.length > 0 ? (
             <div className = "container results-table-view" >
-                  
+              <p className='table-total-records'> Total Records : {data.length}</p>    
               <p className='table-showing'>Showing {currentPage} of {Math.ceil(data.length / countPerPage)} pages</p>
               <table className="table table-striped table-bordered table-expandable mydatatable" style={{width: '100%' }}>
                   <thead>
@@ -123,7 +123,7 @@ const Prereqcheck = () => {
                   <tbody>
                   {viewData.map((item, index) => {
                       return (
-                        <tr key={item.event_id}>
+                        <tr key={index}>
                             <td>{item.event_id}</td>
                             <td>{item.enrollment_id}</td>
                             <td>{item.email}</td>
