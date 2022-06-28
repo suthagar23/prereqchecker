@@ -14,35 +14,48 @@ const Prereqcheck = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
   const [viewData, setViewData] = useState([]);
+  const [error, setError] = useState(null);
+
+  const removeError = () => setError(null);
 
   const doPreRequestCheck = () => {
+    removeError();
     setData([]);
     setValue("");
     setIsLoading(true);
     setFilteredData([]);
     setViewData([]);
-    fetch('/api/prereqcheck')
-      .then(res => res.json())
-      .then(output => {
-        if (output && output.data) {
-          setData(output.data.data);
-          setFilteredData(output.data.data)
-        }
-        setIsLoading(false)
-      })
+    try {
+      fetch('/api/prereqcheck')
+          .then(res => res.json())
+          .then(output => {
+            if (output && output.data) {
+              setData(output.data.data);
+              setFilteredData(output.data.data)
+            }
+            setIsLoading(false)
+          })
+    } catch (e) {
+      setError('An error occurred while fetching data');
+    }
   }
 
   const searchData = throttle(val => {
-    const query = val.toLowerCase();
-    setCurrentPage(1);
-    if (!val) {
-      setFilteredData(data);
-    } else {
-      const collectionData = cloneDeep(
-        data
-          .filter(item => item.full_name.toLowerCase().indexOf(query) > -1)
-      );
-      setFilteredData(collectionData);
+    removeError();
+    try {
+      const query = val.toLowerCase();
+      setCurrentPage(1);
+      if (!val) {
+        setFilteredData(data);
+      } else {
+        const collectionData = cloneDeep(
+          data
+            .filter(item => item.full_name.toLowerCase().indexOf(query) > -1)
+        );
+        setFilteredData(collectionData);
+      }
+    } catch (e) {
+      setError('An error occurred while doing search action');
     }
   }, 400)
 
@@ -91,6 +104,14 @@ const Prereqcheck = () => {
             </button>
           </div>
 
+        { error && (
+          <div class="error-message"> 
+            <p onClick={() => removeError()} className='error-close'>x</p>
+            <p class="error-title"> An error occurred! </p> 
+            <p className='error-info'> {error}</p> 
+          </div>)}
+        
+
         {data && data.length > 0 && (
           <div className="search-container">
             <input
@@ -123,7 +144,7 @@ const Prereqcheck = () => {
                   <tbody>
                   {viewData.map((item, index) => {
                       return (
-                        <tr key={index}>
+                        <tr key={item.event_id}>
                             <td>{item.event_id}</td>
                             <td>{item.enrollment_id}</td>
                             <td>{item.email}</td>

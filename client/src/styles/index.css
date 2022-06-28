@@ -106,3 +106,30 @@ body {
   float: left;
   color: slategrey;
 }
+
+.error-message {
+  border: 1px solid #ff0000ac;
+  border-radius: 20px;
+  margin: 0px 50px;
+  padding: 5px;
+}
+
+.error-message .error-close {
+  float: right;
+  margin: -5px 5px;
+  color: #ff0000ac;
+  cursor: pointer;
+}
+
+.error-message .error-title {
+  color: #ff0000ac;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 0px 10px;
+}
+
+.error-message .error-info {
+  color: #ff0000ac;
+  padding: 0px !important;
+  margin: 5px 10px;
+}
