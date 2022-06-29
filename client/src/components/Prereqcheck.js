@@ -125,7 +125,7 @@ const Prereqcheck = () => {
         {viewData && viewData.length > 0 ? (
             <div className = "container results-table-view" >
               <p className='table-total-records'> Total Records : {data.length}</p>    
-              <p className='table-showing'>Showing {currentPage} of {Math.ceil(viewData.length / countPerPage)} pages</p>
+              <p className='table-showing'>Showing {currentPage} of {Math.ceil(filteredData.length / countPerPage)} pages</p>
               <table className="table table-striped table-bordered table-expandable mydatatable" style={{width: '100%' }}>
                   <thead>
                       <tr>
