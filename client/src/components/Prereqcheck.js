@@ -144,7 +144,7 @@ const Prereqcheck = () => {
                   <tbody>
                   {viewData.map((item, index) => {
                       return (
-                        <tr key={item.event_id}>
+                        <tr key={index}>
                             <td>{item.event_id}</td>
                             <td>{item.enrollment_id}</td>
                             <td>{item.email}</td>
